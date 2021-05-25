@@ -59,22 +59,26 @@ static void sml_output_serial(uint16_t model, uint16_t classification)
 
     switch((int)classification)
     {
+	// case if unknown audio event is found
         case 0: 
         HAL_GPIO_Write(GPIO_4, 1); //blue LED for unknown
         HAL_GPIO_Write(GPIO_5, 0); //green LED off
         HAL_GPIO_Write(GPIO_6, 0); //red LED off
+        HAL_GPIO_Write(GPIO_7, 0); // chemical atomizer GPIO 7 off
         break;
 
         // case if mosquito species 'Aedes' 'Anopheles' 'Culex' detected
-        case (1 || 2 || 3 || 4):
+        case (1 || 2 || 3 || 5):
         HAL_GPIO_Write(GPIO_7, 1); // chemical atomizer GPIO 7 on
         HAL_DelayUSec(15*1000*1000);  // wait 15 seconds for atomizer
         break;
         
-        case 5:
+	// case if nothing detected, only background noise
+        case 4:
         HAL_GPIO_Write(GPIO_5, 1); //green LED for background
         HAL_GPIO_Write(GPIO_4, 0); //blue LED off
         HAL_GPIO_Write(GPIO_6, 0); //red LED off
+	HAL_GPIO_Write(GPIO_7, 0); // chemical atomizer GPIO 7 off
         break;
     }
 
