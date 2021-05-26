@@ -71,6 +71,7 @@ static void sml_output_serial(uint16_t model, uint16_t classification)
         case (1 || 2 || 3 || 5):
         HAL_GPIO_Write(GPIO_7, 1); // chemical atomizer GPIO 7 on
         HAL_DelayUSec(15*1000*1000);  // wait 15 seconds for atomizer
+	HAL_GPIO_Write(GPIO_7, 0); // chemical atomizer GPIO 7 off
         break;
         
 	// case if nothing detected, only background noise
